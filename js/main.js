@@ -1,5 +1,4 @@
 
-
 var app = angular.module("GDGNAOrganizers", []);
 
 app.controller("PhotoControl", function($scope, $http, $window, $timeout, $location){
@@ -73,6 +72,12 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
         }
     }
 
+
+    /**
+     * here is your list of Google+ IDs
+     * you can replace this ajax call with a hard coded array of Google+ IDs 
+     * 
+     */
     $http.
         jsonp('http://api.gdg-x.com/v1/organizers?callback=JSON_CALLBACK').
         success(function(organizers){
@@ -85,18 +90,20 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                 $scope.organizers = tmp;
             }
 
-            console.log($scope.organizers)
-
-            for(var i=0;i<$scope.organizers.length;i++){
+            initSlides($scope.organizers);
+        });
+        
+    function initSlides(list){
+         for(var i=0;i<list.length;i++){
                 $timeout(
                     (function(id, name){
                         return function(){
                             callback(id,name);
                         }
-                    })( $scope.organizers[i])
+                    })( list[i])
                     , (30000*i) );
             }
-        });
+    }    
 
     function callback(organizer){
         fetchUser(organizer);
