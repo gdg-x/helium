@@ -1,0 +1,48 @@
+<!doctype html>
+        <html>
+            <head>
+                <link rel="stylesheet" href="css/main.css" />
+                <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+                <script src="js/main.js"></script>
+                <script type="text/javascript">
+                    (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js?onload=onLoadCallback';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            </head>
+            <body ng-app="GDGNAOrganizers">
+
+                <div ng-controller="PhotoControl" class="photo-container" ng-class="{'move':loaded,'reset':!loaded}" ng-style="photoContainerStyle">
+                    <ul>
+                        <li ng-repeat="photo in photos track by $index">
+                            <img ng-src="{{photo.media$group.media$thumbnail[0].url}}" />
+                        </li>
+                    </ul>
+
+                    <div id="userProfile" ng-class="{'rotate':!loaded}">
+                        <div class="picture">
+                            <img ng-src="{{profile.picture}}" />
+                        </div>
+                        <div class="name">
+                            <h1>{{profile.name}}</h1>
+                        </div>
+                        <div class="chapter">
+                            <h1>{{profile.chapter}}</h1>
+                        </div>
+                        <div class="occupation" ng-show="profile.occupation.title">
+                            <h4>{{profile.occupation.title}}, {{profile.occupation.name}}</h4>
+                        </div>
+                        <div class="location" ng-show="profile.lives">
+                            <h4>{{profile.lives}}</h4>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="photo-overlay" ng-class="{'fade':!$root.$$childHead.loaded}"></div>
+
+            </body>
+        </html>

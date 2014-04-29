@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+    font-size: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 100px;
+}
+
+li img {
+    width: 100%;
+}
+
+.photo-container {
+    margin-left: 0;
+    margin-top: 0;
+    -webkit-transition: margin-top 60s linear .5s;
+}
+
+.photo-container.move {
+    margin-top: -2000px;
+}
+
+.photo-container.reset {
+    -webkit-transition: none;
+}
+
+.photo-overlay {
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 2;
+    width: 100%;
+    height: 1000px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    -webkit-transition: opacity .5s linear;
+}
+.photo-overlay.fade {
+    opacity: 1;
+}
+
+#userProfile {
+    width: 50%;
+    position: absolute;
+    top: 100px;
+    left: 25%;
+    z-index: 3;
+    -webkit-transition: -webkit-transform .5s linear;
+}
+
+#userProfile.rotate {
+    -webkit-transform: rotateY(90deg);
+}
+
+#userProfile div {
+    text-align: center;
+}
+
+#userProfile .picture {
+    width: 300px;
+    margin: 0 auto;
+}
+
+#userProfile .picture img {
+    width: 100%;
+    border: 10px solid #fff;
+    left: -10px;
+    position: relative;
+}
