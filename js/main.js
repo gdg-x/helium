@@ -14,7 +14,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     function fetchUser(organizer){
         $scope.loaded = false;
         $http.
-            get('https://www.googleapis.com/plus/v1/people/'+organizer+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
+            get('https://www.googleapis.com/plus/v1/people/'+organizer.id+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
             success(function(response){
 
 
@@ -26,14 +26,14 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                     occupation : findOccupation(response.organizations),
                     about : response.aboutMe,
                     lives : findLives(response.placesLived),
-                    //chapter : organizer.chapter.name
+                    chapter : organizer.chapter
                 });
             });
     }
 
     function fetchPhotos(organizer, profile){
         $http.
-            get("https://picasaweb.google.com/data/feed/api/user/"+organizer+"?alt=json").
+            get("https://picasaweb.google.com/data/feed/api/user/"+organizer.id+"?alt=json").
             success(function(response){
                 var tmp = [];
 
@@ -76,15 +76,20 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     /**
      * here is your list of Google+ IDs
      * you can replace this ajax call with a hard coded array of Google+ IDs 
-     * 
+     * but basically your building an array of object ex. [{id:'goolePlusId',chapter:'GDGChapterName'}]
      */
     $http.
         jsonp('https://hub.gdgx.io/api/v1/chapters/country/us,ca?perpage=10000&callback=JSON_CALLBACK').
         success(function(response){
             var tmp = [];
             for(var i=0;i<response.items.length;i++){
+                var chapter = response.items[i].name;
                 for(var o=0;o<response.items[i].organizers.length;o++){
-                    tmp.push(response.items[i].organizers[o])
+                    var organizer = {
+                        id : response.items[i].organizers[o],
+                        chapter : name
+                    }
+                    tmp.push(organizer)
                 }
             }
             initSlides(tmp);
