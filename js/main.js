@@ -14,7 +14,8 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     function fetchUser(organizer){
         $scope.loaded = false;
         $http.
-            get('https://www.googleapis.com/plus/v1/people/'+organizer.gplus_id+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
+        //make sure you use your google api key here
+            get('https://www.googleapis.com/plus/v1/people/'+organizer.id+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
             success(function(response){
 
 
@@ -26,14 +27,14 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                     occupation : findOccupation(response.organizations),
                     about : response.aboutMe,
                     lives : findLives(response.placesLived),
-                    chapter : organizer.chapter.name
+                    chapter : organizer.chapter
                 });
             });
     }
 
     function fetchPhotos(organizer, profile){
         $http.
-            get("https://picasaweb.google.com/data/feed/api/user/"+organizer.gplus_id+"?alt=json").
+            get("https://picasaweb.google.com/data/feed/api/user/"+organizer.id+"?alt=json").
             success(function(response){
                 var tmp = [];
 
@@ -76,31 +77,33 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     /**
      * here is your list of Google+ IDs
      * you can replace this ajax call with a hard coded array of Google+ IDs 
-     * 
+     * but basically your building an array of object ex. [{id:'goolePlusId',chapter:'GDGChapterName'}]
      */
     $http.
-        jsonp('http://api.gdg-x.com/v1/organizers?callback=JSON_CALLBACK').
-        success(function(organizers){
+        jsonp('https://hub.gdgx.io/api/v1/chapters/country/us,ca?perpage=10000&callback=JSON_CALLBACK').
+        success(function(response){
             var tmp = [];
-            for(i in organizers){
-                if(organizers[i].chapter.country == "United States" || organizers[i].chapter.country == "Canada"){
-                    tmp.push(organizers[i]);
+            for(var i=0;i<response.items.length;i++){
+                var chapter = response.items[i].name;
+                for(var o=0;o<response.items[i].organizers.length;o++){
+                    var organizer = {
+                        id : response.items[i].organizers[o],
+                        chapter : name
+                    }
+                    tmp.push(organizer)
                 }
-
-                $scope.organizers = tmp;
             }
-
-            initSlides($scope.organizers);
+            initSlides(tmp);
         });
         
     function initSlides(list){
          for(var i=0;i<list.length;i++){
                 $timeout(
-                    (function(id, name){
+                    (function(id){
                         return function(){
-                            callback(id,name);
+                            callback(id);
                         }
-                    })( list[i])
+                    })( list[i] )
                     , (30000*i) );
             }
     }    
