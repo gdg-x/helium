@@ -79,7 +79,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
      * 
      */
     $http.
-        jsonp('https://hub.gdgx.io/api/v1/chapters/country/us,ca?perpage=10000').
+        jsonp('https://hub.gdgx.io/api/v1/chapters/country/us,ca?perpage=10000&callback=JSON_CALLBACK').
         success(function(response){
             var tmp = [];
             for(var i=0;i<response.items.length;i++){
