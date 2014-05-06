@@ -14,7 +14,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     function fetchUser(organizer){
         $scope.loaded = false;
         $http.
-            get('https://www.googleapis.com/plus/v1/people/'+organizer.gplus_id+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
+            get('https://www.googleapis.com/plus/v1/people/'+organizer+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
             success(function(response){
 
 
@@ -33,7 +33,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
 
     function fetchPhotos(organizer, profile){
         $http.
-            get("https://picasaweb.google.com/data/feed/api/user/"+organizer.gplus_id+"?alt=json").
+            get("https://picasaweb.google.com/data/feed/api/user/"+organizer+"?alt=json").
             success(function(response){
                 var tmp = [];
 
