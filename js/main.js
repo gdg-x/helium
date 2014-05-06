@@ -26,7 +26,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                     occupation : findOccupation(response.organizations),
                     about : response.aboutMe,
                     lives : findLives(response.placesLived),
-                    chapter : organizer.chapter.name
+                    //chapter : organizer.chapter.name
                 });
             });
     }
