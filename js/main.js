@@ -14,6 +14,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
     function fetchUser(organizer){
         $scope.loaded = false;
         $http.
+        //make sure you use your google api key here
             get('https://www.googleapis.com/plus/v1/people/'+organizer.id+'?key=AIzaSyA3vAdAjs2SnXFcnhumM8VDwOswJeB-38s').
             success(function(response){
 
