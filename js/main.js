@@ -79,28 +79,25 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
      * 
      */
     $http.
-        jsonp('http://api.gdg-x.com/v1/organizers?callback=JSON_CALLBACK').
-        success(function(organizers){
+        get('https://hub.gdgx.io/api/v1/chapters/country/us,ca?perpage=10000').
+        success(function(response){
             var tmp = [];
-            for(i in organizers){
-                if(organizers[i].chapter.country == "United States" || organizers[i].chapter.country == "Canada"){
-                    tmp.push(organizers[i]);
+            for(var i=0;i<response.items.length;i++){
+                for(var o=0;o<response.items[i].organizers.length;o++){
+                    tmp.push(response.items[i].organizers[o])
                 }
-
-                $scope.organizers = tmp;
             }
-
-            initSlides($scope.organizers);
+            initSlides(tmp);
         });
         
     function initSlides(list){
          for(var i=0;i<list.length;i++){
                 $timeout(
-                    (function(id, name){
+                    (function(id){
                         return function(){
-                            callback(id,name);
+                            callback(id);
                         }
-                    })( list[i])
+                    })( list[i] )
                     , (30000*i) );
             }
     }    
