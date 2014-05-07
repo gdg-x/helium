@@ -88,7 +88,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                 for(var o=0;o<response.items[i].organizers.length;o++){
                     var organizer = {
                         id : response.items[i].organizers[o],
-                        chapter : name
+                        chapter : chapter
                     }
                     tmp.push(organizer)
                 }
@@ -104,7 +104,7 @@ app.controller("PhotoControl", function($scope, $http, $window, $timeout, $locat
                             callback(id);
                         }
                     })( list[i] )
-                    , (30000*i) );
+                    , (10000*i) );
             }
     }    
 
